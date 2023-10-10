@@ -21,10 +21,8 @@ public class LoginController {
         String password = loginRequest.get("password");
 
         if (employerService.authenticateEmployer(email, password)) {
-            // Authentication successful
             return ResponseEntity.ok("Login successful");
         } else {
-            // Authentication failed
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
     }
