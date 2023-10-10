@@ -1,8 +1,6 @@
 package com.vn.BackEnd_Job_Website.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -12,8 +10,10 @@ import org.hibernate.annotations.Nationalized;
 @Entity
 public class Employer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employerID", nullable = false)
     private Integer id;
+
 
     @Nationalized
     @Column(name = "name")
