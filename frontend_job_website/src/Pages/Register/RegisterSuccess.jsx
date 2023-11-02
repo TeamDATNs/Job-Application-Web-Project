@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import Layout from "../../Components/Form/Layout";
-import "./RegisterSuccess.css";
+import { useEffect } from "react";
+import Layout from "../../Layouts/Layout";
+
 import Logo from "../../Assets/JustLogo.svg";
 const LoginSuccess = () => {
   const steps = [
     "Please confirm your new account bt clicking on the link submitted",
     "Go to Login enter new already account.",
   ];
-
+  useEffect(() => {
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 2000);
+  });
   return (
     <>
       <Layout>
