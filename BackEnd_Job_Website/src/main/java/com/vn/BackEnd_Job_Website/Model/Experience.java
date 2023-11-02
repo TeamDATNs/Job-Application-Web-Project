@@ -8,22 +8,18 @@ import org.hibernate.annotations.Nationalized;
 @Getter
 @Setter
 @Entity
-public class Freelancer {
+public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "freelancerID", nullable = false)
+    @Column(name = "ExperienceID", nullable = false)
     private Integer id;
 
     @Nationalized
-    @Column(name = "name")
-    private String name;
+    @Column(name = "OldJobPosition")
+    private String oldJobPosition;
 
     @Nationalized
-    @Column(name = "email")
-    private String email;
-
-    @Nationalized
-    @Column(name = "password")
-    private String password;
+    @Column(name = "Levels")
+    private String levels;
 
 }

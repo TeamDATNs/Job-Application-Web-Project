@@ -10,21 +10,17 @@ import org.hibernate.annotations.Nationalized;
 @Getter
 @Setter
 @Entity
-public class Employer {
+public class HiringContent {
     @Id
-    @Column(name = "employerID", nullable = false)
+    @Column(name = "HiringContentID", nullable = false)
     private Integer id;
 
     @Nationalized
-    @Column(name = "name")
-    private String name;
+    @Column(name = "Title")
+    private String title;
 
     @Nationalized
-    @Column(name = "email")
-    private String email;
-
-    @Nationalized
-    @Column(name = "password")
-    private String password;
+    @Column(name = "Content", length = 1000)
+    private String content;
 
 }

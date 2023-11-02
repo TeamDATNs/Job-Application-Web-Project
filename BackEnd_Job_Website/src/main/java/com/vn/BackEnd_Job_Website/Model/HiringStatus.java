@@ -9,10 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Conversation {
+public class HiringStatus {
     @Id
-    @Column(name = "conversationID", nullable = false)
+    @Column(name = "StatusID", nullable = false)
     private Integer id;
 
-    //TODO [JPA Buddy] generate columns from DB
+    @Column(name = "StatusName", length = 20)
+    private String statusName;
+
 }

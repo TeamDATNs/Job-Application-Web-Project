@@ -1,47 +1,49 @@
 package com.vn.BackEnd_Job_Website.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Nationalized;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "UserAccount")
-public class UserAccount implements UserDetails {
+@Table(name ="Account", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "Email"})
+})
+public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userID", nullable = false)
+    @Column(name = "AccountID", nullable = false)
     private Integer id;
 
-    @Nationalized
-    @Column(name = "name")
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "roleID")
+    private Role role;
 
     @Nationalized
-    @Column(name = "email")
+    @Column(name = "Email")
     private String email;
 
+    @JsonIgnore
     @Nationalized
-    @Column(name = "password")
+    @Column(name = "Password")
     private String password;
-
-
-
-
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(role.name()));
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.getRoleName()));
+//        return null;
     }
 
     @Override

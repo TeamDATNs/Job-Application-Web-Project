@@ -10,13 +10,13 @@ import org.hibernate.annotations.Nationalized;
 @Getter
 @Setter
 @Entity
-public class ApplicationStatus {
+public class SpecializationField {
     @Id
-    @Column(name = "statusID", nullable = false)
+    @Column(name = "SpecializationID", nullable = false)
     private Integer id;
 
     @Nationalized
-    @Column(name = "statusName")
-    private String statusName;
+    @Column(name = "SpecializationName")
+    private String specializationName;
 
 }
