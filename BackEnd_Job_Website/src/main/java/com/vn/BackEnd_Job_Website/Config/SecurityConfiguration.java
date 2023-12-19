@@ -29,14 +29,14 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfiguration {
     private static final String[] WHITE_LIST_URL = {"/api/auth/**",
-                                            "/api/test/**",
-                                            "/api/hiring/**",
-                                            "/",
-                                            "/ws/**",
+            "/api/test/**",
+            "/api/hiring/**",
+            "/",
+            "/ws/**",
             "/api/admin/**",
-                                            "/api/profile/company-avatar/**",
-                                            "/api/profile/company-cover/**",
-                                            "/api/profile"};
+            "/api/profile/company-avatar/**",
+            "/api/profile/company-cover/**",
+            "/api/profile"};
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
