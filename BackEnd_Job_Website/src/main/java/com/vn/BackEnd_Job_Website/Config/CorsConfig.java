@@ -17,6 +17,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:5173")
+                .allowedOrigins("https://gray-bush-08334a200.4.azurestaticapps.net")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("Content-Type", "Authorization")
                 .allowCredentials(true);
