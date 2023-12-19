@@ -49,11 +49,10 @@ public class ApplyHireController {
             ApplyHire save = applyHireRepository.save(applyHire);
             return new ResponseEntity<>(save, HttpStatus.OK);
         }
-
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@RequestPart Integer id) throws Exception {
+    public ResponseEntity<?> delete(@PathVariable Integer id) throws Exception {
         Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Candidate candidate = candidateRepository.findByAccountID(account.getId()).orElseThrow(() -> new Exception("Not found candidate"));
         applyHireRepository.deleteById(id);
@@ -100,6 +99,16 @@ public class ApplyHireController {
         var applied = applyHireRepository.findByCandidateID_IdAndHiringID_Id(candidate.getId(), hiringid);
         return new ResponseEntity<>(applied, HttpStatus.OK);
     }
+
+    @GetMapping("/get-hiring-applied-candidate")
+    public ResponseEntity<?> getApplyByCandidate() {
+        var account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var candidate = candidateRepository.findByAccountID(account.getId()).orElseThrow();
+
+        List<ApplyHire> list = applyHireRepository.findAllByCandidateIDAndAndStatusLike(candidate);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 
     @PatchMapping("update-apply")
     public ResponseEntity<?> update(@RequestBody UpdateStatusApplyRequest request) {

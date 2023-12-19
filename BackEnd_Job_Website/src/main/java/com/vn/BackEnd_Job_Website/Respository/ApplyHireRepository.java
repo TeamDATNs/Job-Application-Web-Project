@@ -23,4 +23,7 @@ public interface ApplyHireRepository extends JpaRepository<ApplyHire, Integer>,
     Optional<ApplyHire> findByCandidateID_IdAndHiringID_Id(Integer candidate_id, Integer hiring_id);
 
     Boolean existsByCandidateIDAndAndHiringID_Id(Candidate candidate, Integer hiring_id);
+
+    @Query(value = "select h from ApplyHire h where h.candidateID = :candidate and h.status = 'Apply'")
+    List<ApplyHire> findAllByCandidateIDAndAndStatusLike(Candidate candidate);
 }

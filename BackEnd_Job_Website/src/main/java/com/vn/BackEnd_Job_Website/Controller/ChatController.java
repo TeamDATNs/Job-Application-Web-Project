@@ -88,8 +88,8 @@ public class ChatController {
     }
 
     @MessageMapping("/chat")
-    @SendTo("chat")
     public void processMessage(@Payload MessagePayload payload) {
+        System.out.println("call");
         var sender = accountRepository.findById(payload.senderId()).orElseThrow();
         var recipient = accountRepository.findById(payload.recipientId()).orElseThrow();
 
