@@ -111,11 +111,11 @@ public class HiringController {
         }
     }
 
-    //find one with company
-    @GetMapping("/with-company")
-    public ResponseEntity<?> findByIdAndCompanyId(@RequestBody RequestHiringAndCompanyID request) {
 
-        Optional<Hiring> hiring = hiringRepository.findByIdAndCompanyId(request.hiringId(), request.CompanyId());
+    //find one with company
+    @GetMapping("/get-one")
+    public ResponseEntity<?> findByIdAndCompanyId(@RequestBody Integer id) {
+        Optional<Hiring> hiring = hiringRepository.findById(id);
         if (hiring.isPresent()) {
             return ResponseEntity.ok(hiring.get());
         } else {
