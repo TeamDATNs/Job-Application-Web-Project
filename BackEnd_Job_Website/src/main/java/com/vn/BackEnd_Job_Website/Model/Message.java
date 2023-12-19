@@ -26,4 +26,11 @@ public class Message {
     @Column(name = "CreateAt")
     private LocalDateTime createAt = LocalDateTime.now();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
+    private Account sender_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id")
+    private Account receiver_id;
 }

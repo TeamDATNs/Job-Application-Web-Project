@@ -9,9 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Integer> {
-    @Query(value = "select c from ChatRoom c where c.senderID.id = :senderId and c.recipientID.id = :recipientId")
-    Optional<ChatRoom> findBySenderIDAndRecipientID(Integer senderId, Integer recipientId);
+//    @Query(value = "select c from ChatRoom c where c.senderID.id = :senderId and c.recipientID.id = :recipientId")
+//    Optional<ChatRoom> findBySenderIDAndRecipientID(Integer senderId, Integer recipientId);
     @Query(value = "select c from ChatRoom c where c.chatID = :id")
     Optional<ChatRoom> findByChatID(String id);
 
+    Optional<ChatRoom> findByUser1_IdAndUser2_Id(Integer user1, Integer user2);
 }

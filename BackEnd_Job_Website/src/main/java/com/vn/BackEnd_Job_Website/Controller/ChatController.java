@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,34 +41,35 @@ public class ChatController {
             boolean createNewRoomIfNotExists
     ) {
         return chatRoomRepository
-                .findBySenderIDAndRecipientID(senderId.getId(), recipientId.getId())
+                .findByUser1_IdAndUser2_Id(senderId.getId(), recipientId.getId())
                 .map(ChatRoom::getChatID)
                 .or(() -> {
                     if(createNewRoomIfNotExists) {
                         var chatId = createChatId(senderId, recipientId);
                         return Optional.of(chatId);
                     }
-
-                    return  Optional.empty();
+                    return Optional.empty();
                 });
     }
 
 
     private String createChatId(Account senderId, Account recipientId) {
-        var chatId = String.format("%s_%s", senderId.getId(), recipientId.getId());
+//        var chatId = String.format("%s_%s", senderId.getId(), recipientId.getId());
+        var chatId = UUID.randomUUID().toString();
+
 
         ChatRoom senderRecipient = ChatRoom
                 .builder()
                 .chatID(chatId)
-                .senderID(senderId)
-                .recipientID(recipientId)
+                .user1(senderId)
+                .user2(recipientId)
                 .build();
 
         ChatRoom recipientSender = ChatRoom
                 .builder()
                 .chatID(chatId)
-                .senderID(recipientId)
-                .recipientID(senderId)
+                .user1(recipientId)
+                .user2(senderId)
                 .build();
 
         chatRoomRepository.save(senderRecipient);
@@ -85,6 +88,7 @@ public class ChatController {
     }
 
     @MessageMapping("/chat")
+    @SendTo("chat")
     public void processMessage(@Payload MessagePayload payload) {
         var sender = accountRepository.findById(payload.senderId()).orElseThrow();
         var recipient = accountRepository.findById(payload.recipientId()).orElseThrow();
@@ -102,8 +106,8 @@ public class ChatController {
                 String.valueOf(recipient.getId()), "/queue/messages",
                 new ChatNotification(
                         savedMsg.getId(),
-                        savedMsg.getChatRoomID().getSenderID().getId(),
-                        savedMsg.getChatRoomID().getRecipientID().getId(),
+                        savedMsg.getSender_id().getId(),
+                        savedMsg.getReceiver_id().getId(),
                         savedMsg.getContent()
                 )
         );
