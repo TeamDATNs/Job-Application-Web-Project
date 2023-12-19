@@ -121,5 +121,6 @@ public class AdminController {
             return new ResponseEntity<>("Candidate not found or already remove", HttpStatus.BAD_REQUEST);
         }
     }
+
     
 }
