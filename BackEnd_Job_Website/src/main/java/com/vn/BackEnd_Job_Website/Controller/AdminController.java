@@ -5,6 +5,7 @@ import com.vn.BackEnd_Job_Website.Dto.ResponseReportDTO;
 import com.vn.BackEnd_Job_Website.Model.Account;
 import com.vn.BackEnd_Job_Website.Model.Candidate;
 import com.vn.BackEnd_Job_Website.Model.Company;
+import com.vn.BackEnd_Job_Website.Model.Hiring;
 import com.vn.BackEnd_Job_Website.Respository.AccountRepository;
 import com.vn.BackEnd_Job_Website.Respository.CandidateRepository;
 import com.vn.BackEnd_Job_Website.Respository.CompanyRepository;
@@ -14,9 +15,11 @@ import com.vn.BackEnd_Job_Website.Utils.BuildEmail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -122,5 +125,12 @@ public class AdminController {
         }
     }
 
-    
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteHiring(@PathVariable int id) {
+        Optional<Hiring> hiring = hiringRepository.findById(id);
+        hiringRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+
+    }
 }
